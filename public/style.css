@@ -1,0 +1,111 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    list-style: none;
+}
+input{
+    background-color: #f2f2f2;
+    border: 1px solid #ddddddc3;
+    padding: 10px;
+    outline: none;
+    border-radius: 10px;
+    width: 100%;
+}
+button{
+    cursor: pointer;
+    border-radius: 5px;
+    font-weight: 500;
+    border: none;
+    padding: 10px;
+    background-color: green;
+    color: #fff;
+}
+
+main{
+    display: flex;
+}
+
+.section-chat{
+    width: 50%;
+    height: calc(100vh - 60px);
+    background-image: url('https://i.pinimg.com/550x/51/ed/c0/51edc046eb80046ee4755ee71d0f19ca.jpg');
+    position: relative;
+}
+
+#lista-mensajes{
+    height: calc(100% - 70px);
+    overflow: auto;
+}
+.fw-bold{
+    font-weight: bold;
+}
+
+li{
+    width: 60%;
+    background-color: #f0f0f0;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px;
+    position: relative;
+    overflow-wrap: break-word
+}
+
+li .time{
+    font-size: 14px;
+    font-weight: 100;
+    color: grey;
+    text-align: right;
+}
+
+.first-chat{
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 10px;
+}
+
+.m-5{
+    margin: 5px;
+}
+
+#header-chat{
+    background-color: #055B50;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #fff;
+    height: 70px;
+    padding: 15px;
+}
+
+.img-user {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.time-msg{
+    position: absolute;
+    bottom: 3px;
+    right: 3px;
+    color: gray;
+}
+
+/* only color chat and margin */
+.my-messages { 
+    margin-left: auto;
+    background-color: #C5E0AE;
+}
+
+/* my form  */
+.second-chat{
+    background-color: #ffffffcf;
+    width: 100%;
+    display: flex;
+    flex-wrap: nowrap;
+    padding: 10px;
+    gap: 5px;
+}

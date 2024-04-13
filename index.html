@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chat con Socket.IO</title>
+    <script src="/socket.io/socket.io.js"></script>
+    <link rel="stylesheet" type="text/css" href="/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+        rel="stylesheet">
+    <script>
+        // Conexión de Socket.IO al servidor
+        var socket = io();
+        // Función para enviar mensajes del chat 1
+        function enviarMensaje1() {
+            var mensaje = document.getElementById('mensaje1').value;
+            var nombreUsuario = document.getElementById('nombreUsuario').value;
+            var urlImagen = document.getElementById('urlImagen').value; // Asegúrate de que esta URL apunte a una imagen válida
+            socket.emit('chat message 1', { mensaje: mensaje, nombreUsuario: nombreUsuario, urlImagen: urlImagen });
+            document.getElementById('mensaje1').value = '';
+            return false;
+        }
+        // Función para recibir mensajes del chat 1
+        socket.on('chat message 1', function (data) {
+            let headerChat = document.getElementById('header-chat'); //header
+            var listaMensajes = document.getElementById('lista-mensajes');
+            var urlImagen = document.getElementById('urlImagen').value;
+            var mensaje = document.createElement('li');
+            headerChat.innerHTML = `
+            <img class="img-user" src="${data.urlImagen}" alt="Foto de perfil">
+            <div>
+                <p class="fw-bold">${data.nombreUsuario}</p>
+                <small>En línea</small>
+            </div>
+            `;
+            var hora = new Date().toLocaleTimeString() //hora actual
+            mensaje.innerHTML = `      
+                <p>${data.mensaje}</p>
+                <p class="time">${new Date().toLocaleTimeString()}</p>
+            `;
+            listaMensajes.appendChild(mensaje);
+        });
+        // Función para enviar mensajes del chat 2
+        function enviarMensaje2() {
+            var mensaje = document.getElementById('mensaje2').value;
+            socket.emit('chat message 2', mensaje);
+            document.getElementById('mensaje2').value = '';
+            return false;
+        }
+        // Función para recibir mensajes del chat 2
+        socket.on('chat message 2', function (msg) {
+            var listaMensajes = document.getElementById('lista-mensajes');
+            var mensaje = document.createElement('li');
+            mensaje.innerHTML = `
+                <p>${msg}</p>
+                <p class="time">${new Date().toLocaleTimeString()}</p>
+            `;
+            mensaje.className = 'my-messages';
+            listaMensajes.appendChild(mensaje);
+        });
+    </script>
+</head>
+<body>
+    <main>
+        <form onsubmit="return enviarMensaje1()" class="first-chat">
+            <h2>Usuario 1</h2>
+            <input id="nombreUsuario" placeholder="Nombre de usuario" />
+            <input id="urlImagen" placeholder="URL imagen" />
+            <input autocomplete="off" id="mensaje1" placeholder="Escribir mensaje..." />
+            <button>Enviar</button>
+        </form>
+        <!-- Main Chat -->
+        <div class="section-chat">
+            <!-- header chat -->
+            <div id="header-chat"></div>
+            <!-- lista mensajes -->
+            <ul id="lista-mensajes"></ul>
+            <!-- mi chat -->
+            <form onsubmit="return enviarMensaje2()" class="second-chat">
+                <input id="mensaje2" autocomplete="off" placeholder="..." />
+                <button class="btn-send-message">
+                    Enviar
+                </button>
+            </form>
+        </div>
+    </main>
+</body>
+</html>
